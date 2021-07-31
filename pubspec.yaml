@@ -23,11 +23,35 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-
+# Service locator
+  get_it: ^7.2.0
+  # Bloc for state management
+  flutter_bloc: ^7.0.1
+  # Value equality
+  equatable: ^2.0.3
+  # Functional programming thingies
+  dartz: ^0.10.0-nullsafety.2
+  # Remote API
+  data_connection_checker: ^0.3.4
+  http: ^0.13.3
+  # Local cache
+  shared_preferences: ^2.0.6
+  # Image 
+  transparent_image: ^2.0.0
+  cached_network_image: ^3.1.0
+  flutter_carousel_slider: ^1.0.8
+  badges: ^2.0.1
+  # Rating stars
+  flutter_rating_bar: ^4.0.0
+  # Json annotator
+  json_annotation: ^3.0.1
+  # API manager
+  chopper: ^3.0.1+1
+  #splash screen
+  splashscreen: 1.2.0
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.3
 
 dev_dependencies:
   flutter_test:
