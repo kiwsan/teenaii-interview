@@ -2,15 +2,15 @@ part of 'new_bloc.dart';
 
 class NewState extends Equatable {
   const NewState({
-    this.status = CustomHttpStatus.initial,
+    this.status = CustomResponseStatus.initial,
     this.news = const <NewEntity>[],
   });
 
-  final CustomHttpStatus status;
+  final CustomResponseStatus status;
   final List<NewEntity> news;
 
   NewState copyWith({
-    CustomHttpStatus? status,
+    CustomResponseStatus? status,
     List<NewEntity>? news,
   }) {
     return NewState(

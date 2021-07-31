@@ -1,21 +1,19 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:http/http.dart' as http;
 import 'package:rxdart/rxdart.dart';
-import 'package:teenaii/core/util/base_entity.dart';
-import 'package:teenaii/core/util/http_status.dart';
+import 'package:teenaii/core/util/custom_enums.dart';
 import 'package:teenaii/features/home/domain/entities/new_entity.dart';
+import 'package:teenaii/features/home/domain/repositories/repositories.dart';
 
 part 'new_event.dart';
 part 'new_state.dart';
 
 class NewBloc extends Bloc<NewEvent, NewState> {
-  NewBloc({required this.httpClient}) : super(const NewState());
+  NewBloc({required this.newRepository}) : super(const NewState());
 
-  final http.Client httpClient;
+  final NewRepository newRepository;
 
   @override
   Stream<Transition<NewEvent, NewState>> transformEvents(
@@ -37,35 +35,19 @@ class NewBloc extends Bloc<NewEvent, NewState> {
 
   Future<NewState> _mapPostFetchedToState(NewState state) async {
     try {
-      final response = await _fetchNews();
+      final response = await newRepository.fetchAsync();
       return response.success == false
-          ? state.copyWith(status: CustomHttpStatus.failure, news: [])
+          ? state.copyWith(status: CustomResponseStatus.failure, news: [])
           : state.copyWith(
-              status: CustomHttpStatus.success,
+              status: CustomResponseStatus.success,
               news: List.of(state.news)
                 ..addAll(response.data == null
                     ? const <NewEntity>[]
                     : response.data!.map((dynamic json) {
                         return NewEntity.fromJson(json);
                       }).toList()));
-    } on Exception {
-      return state.copyWith(status: CustomHttpStatus.failure);
+    } catch (e) {
+      return state.copyWith(status: CustomResponseStatus.failure);
     }
-  }
-
-  Future<BaseEntity> _fetchNews([int startIndex = 0]) async {
-    print(startIndex);
-    final response = await httpClient.get(
-      Uri.https(
-        'dev-api.teenaii.com',
-        '/api/mobile/news-manager/news',
-        // <String, String>{'_start': '$startIndex', '_limit': '$_postLimit'},
-      ),
-    );
-    if (response.statusCode == 200) {
-      final body = json.decode(response.body);
-      return BaseEntity.fromJson(body);
-    }
-    throw Exception('error fetching posts');
   }
 }

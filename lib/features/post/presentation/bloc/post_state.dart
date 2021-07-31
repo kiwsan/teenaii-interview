@@ -2,15 +2,15 @@ part of 'post_bloc.dart';
 
 class PostState extends Equatable {
   const PostState({
-    this.status = CustomHttpStatus.initial,
+    this.status = CustomResponseStatus.initial,
     this.posts = const <PostEntity>[],
   });
 
-  final CustomHttpStatus status;
+  final CustomResponseStatus status;
   final List<PostEntity> posts;
 
   PostState copyWith({
-    CustomHttpStatus? status,
+    CustomResponseStatus? status,
     List<PostEntity>? posts,
   }) {
     return PostState(

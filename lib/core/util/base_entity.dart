@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class BaseEntity extends Equatable {
+class BaseEntity<T> extends Equatable {
   final List? data;
   final bool? success;
 

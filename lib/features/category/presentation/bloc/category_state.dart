@@ -2,15 +2,15 @@ part of 'category_bloc.dart';
 
 class CategoryState extends Equatable {
   const CategoryState({
-    this.status = CustomHttpStatus.initial,
+    this.status = CustomResponseStatus.initial,
     this.categories = const <CategoryEntity>[],
   });
 
-  final CustomHttpStatus status;
+  final CustomResponseStatus status;
   final List<CategoryEntity> categories;
 
   CategoryState copyWith({
-    CustomHttpStatus? status,
+    CustomResponseStatus? status,
     List<CategoryEntity>? categories,
   }) {
     return CategoryState(
