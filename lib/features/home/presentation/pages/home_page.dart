@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:teenaii/core/widgets/app_bar_home.dart';
 import 'package:teenaii/features/category/presentation/bloc/category_bloc.dart';
 import 'package:teenaii/features/home/presentation/bloc/new_bloc.dart';
@@ -30,10 +29,24 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late NewBloc _newBloc;
+  late CategoryBloc _categoryBloc;
+  late PostBloc _postBloc;
 
   @override
   void initState() {
     super.initState();
+
+    _newBloc = sl<NewBloc>();
+    _categoryBloc = sl<CategoryBloc>();
+    _postBloc = sl<PostBloc>();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _newBloc.close();
+    _categoryBloc.close();
+    _postBloc.close();
   }
 
   @override
@@ -45,15 +58,10 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.only(top: 0, bottom: 5, left: 20, right: 0),
               child: MultiBlocProvider(
                 providers: [
+                  BlocProvider(create: (_) => _newBloc..add(NewFetched())),
                   BlocProvider(
-                    create: (_) => sl<NewBloc>()..add(NewFetched()),
-                  ),
-                  BlocProvider(
-                    create: (_) => sl<CategoryBloc>()..add(CategoryFetched()),
-                  ),
-                  BlocProvider(
-                    create: (_) => sl<PostBloc>()..add(PostFetched()),
-                  ),
+                      create: (_) => _categoryBloc..add(CategoryFetched())),
+                  BlocProvider(create: (_) => _postBloc..add(PostFetched())),
                 ],
                 child: SingleChildScrollView(
                     child: Container(

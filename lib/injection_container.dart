@@ -6,10 +6,13 @@ import 'package:http/http.dart' as http;
 // ignore: unused_import
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:teenaii/core/network/rest_api_provider.dart';
+import 'package:teenaii/features/category/data/datasources/datasources.dart';
 import 'package:teenaii/features/category/data/repositories/category_repository_imlp.dart';
 import 'package:teenaii/features/category/domain/repositories/category_repository.dart';
 import 'package:teenaii/features/category/presentation/bloc/category_bloc.dart';
+import 'package:teenaii/features/home/data/datasources/datasources.dart';
 import 'package:teenaii/features/home/presentation/bloc/new_bloc.dart';
+import 'package:teenaii/features/post/data/datasources/datasources.dart';
 import 'package:teenaii/features/post/presentation/bloc/post_bloc.dart';
 
 import 'core/network/network_info.dart';
@@ -37,16 +40,34 @@ Future<void> init() async {
 
   // Repository
   sl.registerLazySingleton<CategoryRepository>(
-    () => CategoryRepositoryImpl(httpClient: sl()),
+    () => CategoryRepositoryImpl(remote: sl(), cached: sl(), networkInfo: sl()),
   );
   sl.registerLazySingleton<NewRepository>(
-    () => NewRepositoryImpl(httpClient: sl()),
+    () => NewRepositoryImpl(remote: sl(), cached: sl(), networkInfo: sl()),
   );
   sl.registerLazySingleton<PostRepository>(
-    () => PostRepositoryImpl(httpClient: sl()),
+    () => PostRepositoryImpl(remote: sl(), cached: sl(), networkInfo: sl()),
   );
 
   // Data sources
+  sl.registerLazySingleton<CategoryRemoteDataSource>(
+    () => CategoryRemoteDataSourceImpl(httpClient: sl()),
+  );
+  sl.registerLazySingleton<CategoryLocalDataSource>(
+    () => CategoryLocalDataSourceImpl(),
+  );
+  sl.registerLazySingleton<NewRemoteDatasource>(
+    () => NewRemoteDatasourceImpl(httpClient: sl()),
+  );
+  sl.registerLazySingleton<NewLocalDatasource>(
+    () => NewLocalDatasourceImpl(),
+  );
+  sl.registerLazySingleton<PostRemoteDatasource>(
+    () => PostRemoteDatasourceImpl(httpClient: sl()),
+  );
+  sl.registerLazySingleton<PostLocalDatasource>(
+    () => PostLocalDatasourceImpl(),
+  );
 
   //! Core
   sl.registerLazySingleton<NetworkInfo>(

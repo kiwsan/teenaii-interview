@@ -4,16 +4,16 @@ import 'image_url_entityt.dart';
 import 'sub_categories_entity.dart';
 
 class CategoryEntity extends Equatable {
-  final String? id;
-  final String? name;
+  final String id;
+  final String name;
   final ImageUrlEntity? imageUrl;
   final String? icon;
   final String? thumbnail;
   final List<SubCategoriesEntity>? subCategories;
 
   const CategoryEntity({
-    this.id,
-    this.name,
+    required this.id,
+    required this.name,
     this.imageUrl,
     this.icon,
     this.thumbnail,
@@ -21,8 +21,8 @@ class CategoryEntity extends Equatable {
   });
 
   factory CategoryEntity.fromJson(Map<String, dynamic> json) => CategoryEntity(
-        id: json['id'] as String?,
-        name: json['name'] as String?,
+        id: json['id'] as String,
+        name: json['name'] as String,
         imageUrl: json['imageUrl'] == null
             ? null
             : ImageUrlEntity.fromJson(json['imageUrl'] as Map<String, dynamic>),

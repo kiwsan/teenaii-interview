@@ -1,16 +1,21 @@
-import 'package:teenaii/core/network/rest_api_provider.dart';
+import 'package:teenaii/core/network/network_info.dart';
 import 'package:teenaii/core/util/base_entity.dart';
+import 'package:teenaii/features/category/data/datasources/category_local_data_source.dart';
+import 'package:teenaii/features/category/data/datasources/datasources.dart';
 import 'package:teenaii/features/category/domain/entities/entities.dart';
 import 'package:teenaii/features/category/domain/repositories/category_repository.dart';
 
 class CategoryRepositoryImpl implements CategoryRepository {
-  CategoryRepositoryImpl({required this.httpClient});
+  CategoryRepositoryImpl(
+      {required this.remote, required this.cached, required this.networkInfo});
 
-  final RestApiProvider httpClient;
+  final CategoryRemoteDataSource remote;
+  final CategoryLocalDataSource cached;
+  final NetworkInfo networkInfo;
 
   @override
   Future<BaseEntity<CategoryEntity>> fetchAsync() async {
-    final body = await httpClient.get('/mobile/post-manager/categories');
-    return BaseEntity.fromJson(body);
+    final entity = await remote.fetchAsync();
+    return entity;
   }
 }

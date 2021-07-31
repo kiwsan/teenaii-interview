@@ -1,16 +1,20 @@
-import 'package:teenaii/core/network/rest_api_provider.dart';
-import 'package:teenaii/features/post/domain/entities/post_entity.dart';
+import 'package:teenaii/core/network/network_info.dart';
+import 'package:teenaii/features/post/data/datasources/datasources.dart';
 import 'package:teenaii/core/util/base_entity.dart';
+import 'package:teenaii/features/post/domain/entities/entities.dart';
 import 'package:teenaii/features/post/domain/repositories/post_repository.dart';
 
 class PostRepositoryImpl implements PostRepository {
-  PostRepositoryImpl({required this.httpClient});
+  PostRepositoryImpl(
+      {required this.remote, required this.cached, required this.networkInfo});
 
-  final RestApiProvider httpClient;
+  final PostRemoteDatasource remote;
+  final PostLocalDatasource cached;
+  final NetworkInfo networkInfo;
 
   @override
   Future<BaseEntity<PostEntity>> fetchAsync() async {
-    final body = await httpClient.get('/mobile/post-manager/posts');
-    return BaseEntity.fromJson(body);
+    final entity = await remote.fetchAsync();
+    return entity;
   }
 }
