@@ -54,6 +54,7 @@ class NewBloc extends Bloc<NewEvent, NewState> {
   }
 
   Future<BaseEntity> _fetchNews([int startIndex = 0]) async {
+    print(startIndex);
     final response = await httpClient.get(
       Uri.https(
         'dev-api.teenaii.com',

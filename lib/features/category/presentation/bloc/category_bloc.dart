@@ -5,8 +5,6 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:http/http.dart' as http;
 import 'package:rxdart/rxdart.dart';
-import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:teenaii/core/util/base_entity.dart';
 import 'package:teenaii/core/util/http_status.dart';
 import 'package:teenaii/features/category/domain/entities/category_entity.dart';

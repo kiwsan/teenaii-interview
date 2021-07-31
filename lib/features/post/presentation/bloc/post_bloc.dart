@@ -54,6 +54,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   }
 
   Future<BaseEntity> _fetchPosts([int startIndex = 0]) async {
+    print(startIndex);
     final response = await httpClient.get(
       Uri.https(
         'dev-api.teenaii.com',
