@@ -14,11 +14,11 @@ class TitleTextDisplay extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Text(text, style: Theme.of(context).textTheme.headline5),
+        Text(text, style: Theme.of(context).textTheme.headline1),
         InkWell(
           child: Text(
             'More',
-            style: Theme.of(context).textTheme.headline6,
+            style: Theme.of(context).textTheme.headline4,
           ),
           onTap: () => {
             ScaffoldMessenger.of(context).showSnackBar(

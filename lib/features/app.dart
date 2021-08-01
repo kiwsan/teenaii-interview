@@ -1,71 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:teenaii/core/util/bottom_navigation.dart';
-import 'package:teenaii/core/util/tab_item.dart';
-import 'package:teenaii/core/util/tab_navigator.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:teenaii/core/util/theme.dart';
+import 'package:teenaii/features/home/presentation/pages/home_page.dart';
 
-class App extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => AppState();
-}
-
-class AppState extends State<App> {
-  var _currentTab = TabItem.home;
-  final _navigatorKeys = {
-    TabItem.home: GlobalKey<NavigatorState>(),
-    TabItem.job: GlobalKey<NavigatorState>(),
-    TabItem.post: GlobalKey<NavigatorState>(),
-    TabItem.profile: GlobalKey<NavigatorState>(),
-  };
-
-  void _selectTab(TabItem tabItem) {
-    if (tabItem == _currentTab) {
-      // pop to first route
-      _navigatorKeys[tabItem]!.currentState!.popUntil((route) => route.isFirst);
-    } else {
-      setState(() => _currentTab = tabItem);
-    }
-  }
-
+class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        final isFirstRouteInCurrentTab =
-            !await _navigatorKeys[_currentTab]!.currentState!.maybePop();
-        if (isFirstRouteInCurrentTab) {
-          // if not on the 'main' tab
-          if (_currentTab != TabItem.home) {
-            // select 'main' tab
-            _selectTab(TabItem.home);
-            // back button handled by app
-            return false;
-          }
-        }
-        // let system handle back button if we're on the first route
-        return isFirstRouteInCurrentTab;
-      },
-      child: Scaffold(
-        body: Stack(children: <Widget>[
-          _buildOffstageNavigator(TabItem.home),
-          _buildOffstageNavigator(TabItem.job),
-          _buildOffstageNavigator(TabItem.post),
-          _buildOffstageNavigator(TabItem.profile),
-        ]),
-        bottomNavigationBar: BottomNavigation(
-          currentTab: _currentTab,
-          onSelectTab: _selectTab,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildOffstageNavigator(TabItem tabItem) {
-    return Offstage(
-      offstage: _currentTab != tabItem,
-      child: TabNavigator(
-        navigatorKey: _navigatorKeys[tabItem],
-        tabItem: tabItem,
+    // This widget is the root of the application.
+    //Set the fit size (fill in the screen size of the device in the design) If the design is based on the size of the iPhone6 ​​(iPhone6 ​​750*1334)
+    //Set the fit size (Find your UI design, look at the dimensions of the device screen and fill it in,unit in dp)
+    return ScreenUtilInit(
+      designSize: Size(360, 690),
+      builder: () => MaterialApp(
+        theme: CustomTheme.mainTheme,
+        debugShowCheckedModeBanner: false,
+        title: 'Teenaii',
+        builder: (context, widget) {
+          return MediaQuery(
+            //Setting font does not change with system font size
+            data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+            child: widget as Widget,
+          );
+        },
+        home: HomePage(),
       ),
     );
   }

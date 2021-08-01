@@ -4,6 +4,7 @@ import 'package:teenaii/core/util/custom_enums.dart';
 import 'package:teenaii/core/widgets/bottom_loader.dart';
 import 'package:teenaii/features/home/presentation/widgets/post_list_item.dart';
 import 'package:teenaii/features/post/presentation/bloc/post_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PostsList extends StatelessWidget {
   @override
@@ -18,7 +19,7 @@ class PostsList extends StatelessWidget {
               return const Center(child: Text('no posts'));
             }
             return SizedBox(
-              height: 280,
+              height: 280.h,
               child: ListView.builder(
                 physics: ClampingScrollPhysics(),
                 shrinkWrap: true,
@@ -30,7 +31,7 @@ class PostsList extends StatelessWidget {
                   return index >= state.posts.length
                       ? BottomLoader()
                       : Padding(
-                          padding: EdgeInsets.fromLTRB(0, 0, 8, 10),
+                          padding: EdgeInsets.fromLTRB(0.r, 0.r, 8.r, 10.r),
                           child: PostListItem(post: state.posts[index]));
                 },
               ),

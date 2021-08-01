@@ -8,6 +8,7 @@ import 'package:teenaii/features/home/presentation/pages/pages.dart';
 import 'package:teenaii/features/home/presentation/widgets/widgets.dart';
 import 'package:teenaii/features/post/presentation/bloc/post_bloc.dart';
 import 'package:teenaii/injection_container.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomePage extends StatefulWidget {
   // This widget is the home page of your application. It is stateful, meaning
@@ -18,10 +19,6 @@ class HomePage extends StatefulWidget {
   // case the title) provided by the parent (in this case the App widget) and
   // used by the build method of the State. Fields in a Widget subclass are
   // always marked "final".
-
-  HomePage({required this.title, this.onPush});
-  final String title;
-  final ValueChanged<int>? onPush;
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -53,9 +50,29 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBarHome(),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: 0, // this will be set when a new tab is tapped
+          type: BottomNavigationBarType.fixed,
+          selectedItemColor: Colors.blue,
+          items: [
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.home_outlined),
+              label: 'หน้าหลัก',
+            ),
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.health_and_safety_rounded),
+              label: 'จ้างงาน',
+            ),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.hdr_plus), label: 'โพสต์งาน'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.verified_user_outlined), label: 'โปรไฟล์')
+          ],
+        ),
         body: Stack(children: <Widget>[
           Padding(
-              padding: EdgeInsets.only(top: 0, bottom: 5, left: 20, right: 0),
+              padding: EdgeInsets.only(
+                  top: 0.r, bottom: 5.r, left: 20.r, right: 0.r),
               child: MultiBlocProvider(
                 providers: [
                   BlocProvider(create: (_) => _newBloc..add(NewFetched())),
@@ -65,12 +82,12 @@ class _HomePageState extends State<HomePage> {
                 ],
                 child: SingleChildScrollView(
                     child: Container(
-                  padding: EdgeInsets.only(top: 100),
+                  padding: EdgeInsets.only(top: 90.sp),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.only(right: 20),
+                        padding: EdgeInsets.only(right: 20.r),
                         child: BlocBuilder<NewBloc, NewState>(
                           builder: (context, state) {
                             return NewList();
@@ -78,14 +95,14 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       SizedBox(
-                        height: 30,
+                        height: 20.h,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(right: 20),
+                        padding: EdgeInsets.only(right: 20.r),
                         child: TitleTextDisplay(text: "Categories"),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 20.h,
                       ),
                       BlocBuilder<CategoryBloc, CategoryState>(
                         builder: (context, state) {
@@ -93,11 +110,11 @@ class _HomePageState extends State<HomePage> {
                         },
                       ),
                       Padding(
-                        padding: EdgeInsets.only(right: 20),
+                        padding: EdgeInsets.only(right: 20.r),
                         child: TitleTextDisplay(text: "Latest"),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 20.h,
                       ),
                       BlocBuilder<PostBloc, PostState>(
                         builder: (context, state) {
@@ -109,11 +126,11 @@ class _HomePageState extends State<HomePage> {
                 )),
               )),
           Positioned(
-              top: 20.0,
+              top: 10.sp,
               child: Container(
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                padding: EdgeInsets.symmetric(vertical: 10.r, horizontal: 20.r),
                 width: MediaQuery.of(context).size.width,
-                height: 70.0,
+                height: 70.r,
                 child: SearchControls(),
               ))
         ]));

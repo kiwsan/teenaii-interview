@@ -19,7 +19,7 @@ class CategoriesList extends StatelessWidget {
               return const Center(child: Text('no posts'));
             }
             return SizedBox(
-              height: 140,
+              height: 130,
               child: ListView.builder(
                 physics: ClampingScrollPhysics(),
                 shrinkWrap: true,

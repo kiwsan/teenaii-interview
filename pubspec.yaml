@@ -54,6 +54,10 @@ dependencies:
   cupertino_icons: ^1.0.3
   # Darabase
   hive: ^2.0.4
+  # Fonts
+  google_fonts: ^2.1.0
+  # ScreenUtil
+  flutter_screenutil: ^5.0.0+2
 
 dev_dependencies:
   flutter_test:
